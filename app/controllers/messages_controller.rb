@@ -6,14 +6,19 @@ class MessagesController < ApplicationController
     render text: params['hub.challenge']
   end
 
+  # {"object"=>"page",
+  #  "entry"=>[{"id"=>"1559088657719817", "time"=>1466475527710,
+  #            "messaging"=>[
+  #             {"sender"=>{"id"=>"1032290006854660"},
+  #              "recipient"=>{"id"=>"1559088657719817"},
+  #              "timestamp"=>1466474884953,
+  #              "message"=>{"mid"=>"mid.1466474884679:eeb908bf78b80bdd95", "seq"=>2, "text"=>"Hi there"}}]}]
+  #  "message"=>{"object"=>"page",
+  #              "entry"=>[{"id"=>"1559088657719817", "time"=>1466475527710, "messaging"=>[{"sender"=>{"id"=>"1032290006854660"}, "recipient"=>{"id"=>"1559088657719817"}, "timestamp"=>1466474884953, "message"=>{"mid"=>"mid.1466474884679:eeb908bf78b80bdd95", "seq"=>2, "text"=>"Hi there"}}]}]}}
   def create
-    sender_id = params[:sender][:id]
-    recipient_id = params[:recipient][:id]
-    message = params[:message]
-    message_id = params[:message][:id]
+    recipient_id = params[:entry].first[:messaging].first[:recipient][:id]
 
     message_text = "Good morning"
-
     message_data = { recipient: { id: recipient_id },
                      message: { text: message_text } }
 
