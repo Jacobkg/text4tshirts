@@ -26,6 +26,8 @@ class MessagesController < ApplicationController
     HTTParty.post("https://graph.facebook.com/v2.6/me/messages?access_token=#{access_token}",
       body: message_data.to_json,
       headers: { 'Content-Type' => 'application/json' })
+
+    render status: 200, json: { success: 'yes' }
   end
 
 end
